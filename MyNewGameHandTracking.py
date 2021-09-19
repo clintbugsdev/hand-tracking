@@ -6,11 +6,13 @@ import HandTrackingModule as htm
 pTime = 0
 cTime = 0
 
-cap = cv2.VideoCapture(0)
+cap = cv2.VideoCapture(0, cv2.CAP_DSHOW)
 detector = htm.HandDetector()
 
-while True:
+while cap.isOpened():
     success, img = cap.read()
+    if not success:
+        break
     img = detector.findHands(img)
     lmList = detector.findPosition(img)
     if len(lmList) != 0:
@@ -25,3 +27,6 @@ while True:
 
     cv2.imshow("Image", img)
     cv2.waitKey(1)
+
+cap.release()
+cv2.destroyAllWindows()
