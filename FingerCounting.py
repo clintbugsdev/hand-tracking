@@ -12,7 +12,7 @@ cap.set(4, hCam)
 pTime = 0
 
 # HandTracking Module
-detector = htm.HandDetector(detectionCon=0.75)
+detector = htm.HandDetector(maxHands=1, detectionCon=0.75)
 
 tipIds = [4, 8, 12, 16, 20]
 
@@ -21,7 +21,7 @@ while cap.isOpened():
     if not success:
         break
     img = detector.findHands(img)
-    lmList = detector.findPosition(img, draw=False)
+    lmList, bbox = detector.findPosition(img, draw=False)
     if len(lmList) != 0:
         fingers = []
 
@@ -56,6 +56,3 @@ while cap.isOpened():
 
     cv2.imshow("Image", img)
     cv2.waitKey(1)
-
-cap.release()
-cv2.destroyAllWindows()

@@ -1,5 +1,4 @@
 import cv2
-import mediapipe as mp
 import time
 import HandTrackingModule as htm
 
@@ -14,7 +13,7 @@ while cap.isOpened():
     if not success:
         break
     img = detector.findHands(img)
-    lmList = detector.findPosition(img)
+    lmList, bbox = detector.findPosition(img)
     if len(lmList) != 0:
         print(lmList[4])
 

@@ -16,6 +16,8 @@ while cap.isOpened():
     if not success:
         break
     imgRGB = cv2.cvtColor(img, cv2.COLOR_BGR2RGB)
+    if len(imgRGB) == 0:
+        break
     results = hands.process(imgRGB)
     # print(results.multi_hand_landmarks)
 

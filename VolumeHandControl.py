@@ -13,7 +13,7 @@ wCam, hCam = 640, 480
 #####################
 
 # Camera
-cap = cv2.VideoCapture(0, cv2.CAP_DSHOW)
+cap = cv2.VideoCapture(0)
 cap.set(3, wCam)
 cap.set(4, hCam)
 pTime = 0
@@ -33,12 +33,10 @@ vol = 0
 volBar = 400
 volPer = 0
 
-while cap.isOpened():
+while True:
     success, img = cap.read()
-    if not success:
-        break
     img = detector.findHands(img)
-    lmList = detector.findPosition(img, draw=False)
+    lmList, bbox = detector.findPosition(img, draw=False)
     if len(lmList) != 0:
         # print(lmList[4], lmList[8])
 
@@ -83,6 +81,3 @@ while cap.isOpened():
                 1, (255, 0, 0), 3)
     cv2.imshow("Img", img)
     cv2.waitKey(1)
-
-cap.release()
-cv2.destroyAllWindows()
